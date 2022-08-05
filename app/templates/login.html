@@ -6,11 +6,17 @@
         {{ login_form.hidden_tag() }}
         <p>
             {{ login_form.username.label }}<br>
-            {{ login_form.username(size=32) }}
+            {{ login_form.username(size=32) }}<br>
+            {% for error in login_form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>
             {{ login_form.password.label }}<br>
-            {{ login_form.password(size=32) }}
+            {{ login_form.password(size=32) }}<br>
+            {% for error in login_form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>
             {{ login_form.remember_me() }} {{ login_form.remember_me.label }}
