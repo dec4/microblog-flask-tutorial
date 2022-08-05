@@ -1,10 +1,13 @@
 from flask import flash
 from flask import redirect
 from flask import render_template
+from flask import request
 from flask import url_for
 from flask_login import current_user
+from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
+from werkzeug.urls import url_parse
 
 from app import app
 from app.forms import LoginForm
@@ -39,10 +42,18 @@ def login():
         else:
             login_user(user, remember=form.remember_me.data)
             flash(f'Login success for user {form.username.data}, remember_me={form.remember_me.data}')  # todo: maybe delete
-            return redirect(url_for('index'))
+            next_page = request.args.get('next')
+            if not next_page or url_parse(next_page).netloc != '':
+                next_page = url_for('index')
+            return redirect(next_page)
     return render_template('login.html', title='Sign In', login_form=form)
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/random-login-required-page')
+@login_required
+def random_login_required():
+    return render_template('temp.html', title='Temp')
