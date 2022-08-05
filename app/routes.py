@@ -4,12 +4,12 @@ from flask import render_template
 from flask import url_for
 from flask_login import current_user
 from flask_login import login_user
+from flask_login import logout_user
 
 from app import app
 from app.forms import LoginForm
 from app.models import User
 
-mock_user = {'username': 'dani'}
 mock_posts = [
     {
         'author': {'username': 'John'},
@@ -24,7 +24,7 @@ mock_posts = [
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', title='Home', user=mock_user, posts=mock_posts)
+    return render_template('index.html', title='Home', posts=mock_posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -41,3 +41,8 @@ def login():
             flash(f'Login success for user {form.username.data}, remember_me={form.remember_me.data}')  # todo: maybe delete
             return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', login_form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
