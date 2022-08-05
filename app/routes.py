@@ -2,9 +2,12 @@ from flask import flash
 from flask import redirect
 from flask import render_template
 from flask import url_for
+from flask_login import current_user
+from flask_login import login_user
 
 from app import app
 from app.forms import LoginForm
+from app.models import User
 
 mock_user = {'username': 'dani'}
 mock_posts = [
@@ -25,8 +28,16 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():  # runs validation when browser sends POST on user submit
-        flash(f'Login requested for user {form.username.data}, remember_me={form.remember_me.data}')
-        return redirect(url_for('index'))
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        else:
+            login_user(user, remember=form.remember_me.data)
+            flash(f'Login success for user {form.username.data}, remember_me={form.remember_me.data}')  # todo: maybe delete
+            return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', login_form=form)

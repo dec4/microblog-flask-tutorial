@@ -1,10 +1,10 @@
 flask==2.2.1
-
 # databases
 flask-migrate-3.1.0
 flask-sqlalchemy==2.5.1
-
 # forms
 flask-wtf==1.0.1
+# other
+flask-login==0.6.2
 
 python-dotenv==0.20.0
