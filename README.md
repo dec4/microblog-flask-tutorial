@@ -10,5 +10,7 @@ source venv/bin/activate
 ## Running the Application
 
 ```sh
+FLASK_APP=microblog.py
+FLASK_ENV=development  # optional
 flask run
 ```
