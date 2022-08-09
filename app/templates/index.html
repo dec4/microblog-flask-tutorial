@@ -2,19 +2,21 @@
 
 {% block content %}
     <h1>Hello, {{ current_user.username }}!</h1>
-    <form action="" method="post">
-        {{ post_form.hidden_tag() }}
-        <p>
-            {{ post_form.post.label }}<br>
-            {{ post_form.post(cols=32, rows=4) }}<br>
-            {% for error in post_form.post.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ post_form.submit() }}
-        </p>
-    </form>
+    {% if post_form %}
+        <form action="" method="post">
+            {{ post_form.hidden_tag() }}
+            <p>
+                {{ post_form.post.label }}<br>
+                {{ post_form.post(cols=32, rows=4) }}<br>
+                {% for error in post_form.post.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ post_form.submit() }}
+            </p>
+        </form>
+    {% endif %}
     {% for post in posts %}
         {% include '_post.html' %}
     {% endfor %}
