@@ -17,7 +17,5 @@
             </p>
         </form>
     {% endif %}
-    {% for post in posts %}
-        {% include '_post.html' %}
-    {% endfor %}
+    {% include '_paginated_posts.html' %}
 {% endblock %}

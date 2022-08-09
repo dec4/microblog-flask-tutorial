@@ -30,11 +30,5 @@
         </tr>
     </table>
     <hr>
-    {% for post in posts %}
-        <table>
-            <tr valign="top">
-                {% include '_post.html' %}
-            </tr>
-        </table>
-    {% endfor %}
+    {% include '_paginated_posts.html' %}
 {% endblock %}
