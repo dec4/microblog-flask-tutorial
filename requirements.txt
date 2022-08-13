@@ -7,5 +7,7 @@ flask-wtf==1.0.1
 email-validator==1.2.1
 # other
 flask-login==0.6.2
+flask-mail==0.9.1
 
 python-dotenv==0.20.0
+pyjwt==2.4.0
